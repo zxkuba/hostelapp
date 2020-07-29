@@ -18,4 +18,22 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         System.err.println(Arrays.toString(e.getStackTrace()));
         return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
     }
+
+    @ExceptionHandler(RoomNotFoundException.class)
+    public ResponseEntity<Object> noRoomException(RoomNotFoundException e, WebRequest webRequest) {
+        System.err.println(Arrays.toString(e.getStackTrace()));
+        return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
+    }
+
+    @ExceptionHandler(ResidentNotFoundException.class)
+    public ResponseEntity<Object> noResidentException(ResidentNotFoundException e, WebRequest webRequest) {
+        System.err.println(Arrays.toString(e.getStackTrace()));
+        return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
+    }
+
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public ResponseEntity<Object> noReservationException(ReservationNotFoundException e, WebRequest webRequest) {
+        System.err.println(Arrays.toString(e.getStackTrace()));
+        return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
+    }
 }

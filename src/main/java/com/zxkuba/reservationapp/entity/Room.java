@@ -1,14 +1,15 @@
-package com.zxkuba.reservationapp.domain;
+package com.zxkuba.reservationapp.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Getter
 @Builder
 @Entity
 @Table(name = "ROOMS")
@@ -22,11 +23,20 @@ public class Room {
 
     @NotNull
     @Column(name = "FLAT_NUMBER")
-    private String flatNumber;
+    private Integer flatNumber;
 
     @NotNull
     @Column(name = "TOTAL_QUANTITY_OF_BEDS")
     private Integer totalQuantityOfBeds;
+
+
+    @OneToMany(
+            targetEntity = Resident.class,
+            mappedBy = "room",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Resident> residents = new ArrayList<>();
 
     @Transient
     private Integer currentBedsQuantity;

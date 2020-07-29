@@ -1,14 +1,13 @@
 package com.zxkuba.reservationapp.controller;
 
-import com.zxkuba.reservationapp.domain.Room;
-import com.zxkuba.reservationapp.dto.RoomDto;
-import com.zxkuba.reservationapp.exception.NoElementFoundException;
+import com.zxkuba.reservationapp.domain.RoomDto;
+import com.zxkuba.reservationapp.exception.ResidentNotFoundException;
+import com.zxkuba.reservationapp.exception.RoomNotFoundException;
 import com.zxkuba.reservationapp.service.RoomDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -29,17 +28,17 @@ public class RoomController {
     }
 
     @GetMapping(value = "/{roomId}", produces = APPLICATION_JSON_VALUE)
-    public RoomDto getRoom(@PathVariable Long roomId) throws NoElementFoundException {
+    public RoomDto getRoom(@PathVariable Long roomId) throws RoomNotFoundException {
         return roomDbService.getRoomById(roomId);
     }
 
     @DeleteMapping("/{roomId}")
-    public void deleteRoom(@PathVariable Long roomId) throws NoElementFoundException {
+    public void deleteRoom(@PathVariable Long roomId) throws RoomNotFoundException {
         RoomDto roomDto = roomDbService.getRoomById(roomId);
         if(roomDto != null){
             roomDbService.delete(roomId);
         }else {
-            throw new NoElementFoundException();
+            throw new RoomNotFoundException();
         }
     }
 
@@ -51,5 +50,12 @@ public class RoomController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public RoomDto createRoom(@RequestBody RoomDto roomDto){
         return roomDbService.saveRoom(roomDto);
+    }
+
+    @PutMapping(value = "/{roomId}" , produces = APPLICATION_JSON_VALUE)
+    public void setResidentToRoom(@PathVariable Long roomId, @RequestBody Long residentId)
+            throws RoomNotFoundException, ResidentNotFoundException {
+        roomDbService.setResidentToRoom(roomId, residentId);
+
     }
 }

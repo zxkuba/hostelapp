@@ -1,6 +1,6 @@
 package com.zxkuba.reservationapp.repository;
 
-import com.zxkuba.reservationapp.entity.Room;
+import com.zxkuba.reservationapp.entity.Resident;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,20 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 @Transactional
-public interface RoomRepository extends CrudRepository<Room, Long> {
+public interface ResidentRepository extends CrudRepository<Resident, Long> {
 
     @Override
-    List<Room> findAll();
+    List<Resident> findAll();
 
     @Override
-    Optional<Room> findById(Long roomId);
+    Optional<Resident> findById(Long residentId);
 
     @Override
-    Room save(Room room);
+    Resident save(Resident resident);
 
     @Override
-    void deleteById(Long roomId);
+    void deleteById(Long residentId);
+
 }

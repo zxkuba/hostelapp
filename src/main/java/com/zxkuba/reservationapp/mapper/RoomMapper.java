@@ -1,7 +1,7 @@
 package com.zxkuba.reservationapp.mapper;
 
-import com.zxkuba.reservationapp.domain.Room;
-import com.zxkuba.reservationapp.dto.RoomDto;
+import com.zxkuba.reservationapp.entity.Room;
+import com.zxkuba.reservationapp.domain.RoomDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +15,7 @@ public class RoomMapper {
                 roomDto.getId(),
                 roomDto.getFlatNumber(),
                 roomDto.getTotalQuantityOfBeds(),
+                roomDto.getResidents(),
                 roomDto.getCurrentBedsQuantity());
     }
 
@@ -23,6 +24,7 @@ public class RoomMapper {
                 room.getId(),
                 room.getFlatNumber(),
                 room.getTotalQuantityOfBeds(),
+                room.getResidents(),
                 room.getCurrentBedsQuantity());
     }
 
