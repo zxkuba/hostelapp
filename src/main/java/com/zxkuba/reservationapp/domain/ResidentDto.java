@@ -5,6 +5,7 @@ import com.zxkuba.reservationapp.entity.Room;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +18,5 @@ public class ResidentDto {
     private String firstName;
     private String lastName;
     private Room room;
-    private List<Reservation> reservations;
+    private Set<Reservation> reservations;
 }

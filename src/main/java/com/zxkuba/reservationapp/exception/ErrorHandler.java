@@ -36,4 +36,11 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         System.err.println(Arrays.toString(e.getStackTrace()));
         return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
     }
+
+    @ExceptionHandler(CheckOutNotFoundException.class)
+    public ResponseEntity<Object> noCheckOutException(CheckOutNotFoundException e, WebRequest webRequest) {
+        System.err.println(Arrays.toString(e.getStackTrace()));
+        return handleExceptionInternal(e, e.getMessage(), HttpHeaders.EMPTY, HttpStatus.NOT_FOUND, webRequest);
+    }
+
 }

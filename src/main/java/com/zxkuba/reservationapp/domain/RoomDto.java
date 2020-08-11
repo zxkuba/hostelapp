@@ -4,6 +4,7 @@ import com.zxkuba.reservationapp.entity.Resident;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class RoomDto {
     private Long id;
     private Integer flatNumber;
     private Integer totalQuantityOfBeds;
-    private List<Resident> residents;
+    private Set<Resident> residents;
     private Integer currentBedsQuantity;
 
 

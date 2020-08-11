@@ -1,6 +1,7 @@
 package com.zxkuba.reservationapp.repository;
 
-import com.zxkuba.reservationapp.entity.Reservation;
+import com.zxkuba.reservationapp.entity.CheckOut;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,20 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @Transactional
-public interface ReservationRepository extends CrudRepository<Reservation, Long> {
+@Repository
+public interface CheckOutRepository extends CrudRepository<CheckOut, Long> {
 
     @Override
-    List<Reservation> findAll();
+    List<CheckOut> findAll();
 
     @Override
-    Optional<Reservation> findById(Long reservationId);
+    Optional<CheckOut> findById(Long checkOutId);
 
     @Override
-    Reservation save(Reservation reservation);
+    CheckOut save(CheckOut checkOut);
 
     @Override
-    void deleteById(Long reservationId);
-
+    void deleteById(Long checkOutId);
 }

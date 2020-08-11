@@ -52,8 +52,8 @@ public class ResidentController {
         return residentDbService.saveResident(residentDto);
     }
 
-    @PutMapping (value = "setReservationList")
-    public void setReservationToResident(@RequestParam Long residentId, @RequestParam Long reservationId)
+    @PutMapping (value = "/{residentId}", produces = APPLICATION_JSON_VALUE)
+    public void setReservationToResident(@PathVariable Long residentId, @RequestBody Long reservationId)
     throws ResidentNotFoundException, ReservationNotFoundException {
         residentDbService.setReservationToResident(residentId, reservationId);
     }

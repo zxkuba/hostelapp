@@ -5,7 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,7 +38,7 @@ public class Room {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private List<Resident> residents = new ArrayList<>();
+    private Set<Resident> residents = new HashSet<>();
 
     @Transient
     private Integer currentBedsQuantity;

@@ -3,14 +3,11 @@ package com.zxkuba.reservationapp.service;
 import com.zxkuba.reservationapp.entity.Reservation;
 import com.zxkuba.reservationapp.entity.Resident;
 import com.zxkuba.reservationapp.domain.ResidentDto;
-import com.zxkuba.reservationapp.entity.Room;
-import com.zxkuba.reservationapp.exception.NoElementFoundException;
 import com.zxkuba.reservationapp.exception.ReservationNotFoundException;
 import com.zxkuba.reservationapp.exception.ResidentNotFoundException;
 import com.zxkuba.reservationapp.mapper.ResidentMapper;
 import com.zxkuba.reservationapp.repository.ReservationRepository;
 import com.zxkuba.reservationapp.repository.ResidentRepository;
-import com.zxkuba.reservationapp.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
