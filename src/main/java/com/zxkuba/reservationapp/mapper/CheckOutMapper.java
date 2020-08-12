@@ -11,20 +11,24 @@ import java.util.stream.Collectors;
 @Component
 public class CheckOutMapper {
 
+
     public CheckOut mapToCheckOut(final CheckOutDto checkOutDto){
+
         return  new CheckOut(
                 checkOutDto.getId(),
-                checkOutDto.getResident(),
+                checkOutDto.getReservation(),
                 checkOutDto.getStayLength(),
-                checkOutDto.getTotalPrice());
+                checkOutDto.getTotalPrice(),
+                checkOutDto.getEuroTotalPrice());
     }
 
     public CheckOutDto mapToCheckOutDto(final CheckOut checkOut){
         return new CheckOutDto(
                 checkOut.getId(),
-                checkOut.getResident(),
+                checkOut.getReservation(),
                 checkOut.getStayLength(),
-                checkOut.getTotalPrice());
+                checkOut.getTotalPrice(),
+                checkOut.getEuroTotalPrice());
     }
 
     public List<CheckOutDto> mapToCheckOutDtoList (final List<CheckOut> checkOutList){

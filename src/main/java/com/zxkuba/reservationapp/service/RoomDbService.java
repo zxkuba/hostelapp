@@ -56,6 +56,8 @@ public class RoomDbService {
         roomResident.getResidents().add(residentRoom);
         residentRoom.setRoom(roomResident);
 
+        roomResident.setCurrentBedsQuantity(roomResident.getCurrentBedsQuantity() - roomResident.getResidents().size());
+
         roomRepository.save(roomResident);
         residentRepository.save(residentRoom);
     }

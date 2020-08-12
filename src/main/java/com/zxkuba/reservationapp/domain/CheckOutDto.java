@@ -1,5 +1,6 @@
 package com.zxkuba.reservationapp.domain;
 
+import com.zxkuba.reservationapp.entity.Reservation;
 import com.zxkuba.reservationapp.entity.Resident;
 import lombok.*;
 
@@ -13,7 +14,8 @@ import java.math.BigDecimal;
 public class CheckOutDto {
 
     private Long id;
-    private Resident resident;
+    private Reservation reservation;
     private Integer stayLength;
     private BigDecimal totalPrice;
+    private BigDecimal euroTotalPrice;
 }

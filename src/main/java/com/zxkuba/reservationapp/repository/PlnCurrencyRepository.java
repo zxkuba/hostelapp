@@ -11,4 +11,6 @@ public interface PlnCurrencyRepository extends CrudRepository<FixerCurrency, Lon
 
     @Override
     FixerCurrency save(FixerCurrency plnCurrency);
+
+
 }

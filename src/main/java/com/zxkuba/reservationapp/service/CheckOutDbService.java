@@ -2,15 +2,21 @@ package com.zxkuba.reservationapp.service;
 
 import com.zxkuba.reservationapp.domain.CheckOutDto;
 import com.zxkuba.reservationapp.entity.CheckOut;
+import com.zxkuba.reservationapp.entity.Reservation;
 import com.zxkuba.reservationapp.entity.Resident;
+import com.zxkuba.reservationapp.entity.currency.FixerCurrencyRate;
 import com.zxkuba.reservationapp.exception.CheckOutNotFoundException;
+import com.zxkuba.reservationapp.exception.ReservationNotFoundException;
 import com.zxkuba.reservationapp.exception.ResidentNotFoundException;
 import com.zxkuba.reservationapp.mapper.CheckOutMapper;
 import com.zxkuba.reservationapp.repository.CheckOutRepository;
+import com.zxkuba.reservationapp.repository.ReservationRepository;
 import com.zxkuba.reservationapp.repository.ResidentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -18,13 +24,16 @@ public class CheckOutDbService {
 
     private final CheckOutRepository checkOutRepository;
     private final CheckOutMapper checkOutMapper;
-    private final ResidentRepository residentRepository;
+    private final ReservationRepository reservationRepository;
+    private final FixerCurrencyRate fixerCurrencyRate;
 
     @Autowired
-    public CheckOutDbService(CheckOutRepository checkOutRepository, CheckOutMapper checkOutMapper, ResidentRepository residentRepository) {
+    public CheckOutDbService(CheckOutRepository checkOutRepository, CheckOutMapper checkOutMapper,
+                             ReservationRepository reservationRepository, FixerCurrencyRate fixerCurrencyRate) {
         this.checkOutRepository = checkOutRepository;
         this.checkOutMapper = checkOutMapper;
-        this.residentRepository = residentRepository;
+        this.reservationRepository = reservationRepository;
+        this.fixerCurrencyRate = fixerCurrencyRate;
     }
 
     public List<CheckOutDto> getAllCheckOuts (){
@@ -46,11 +55,20 @@ public class CheckOutDbService {
         checkOutRepository.deleteById(checkOutId);
     }
 
-    public void setResidentToCheckOut(Long checkOutId, Long residentId) throws CheckOutNotFoundException, ResidentNotFoundException{
-        CheckOut checkOutResident = checkOutRepository.findById(checkOutId).orElseThrow(CheckOutNotFoundException::new);
-        Resident residentCheckOut = residentRepository.findById(residentId).orElseThrow(ResidentNotFoundException::new);
+    public void setReservationToCheckOut(Long checkOutId, Long reservationId)
+            throws CheckOutNotFoundException, ReservationNotFoundException {
+        CheckOut checkOutReservation = checkOutRepository.findById(checkOutId).orElseThrow(CheckOutNotFoundException::new);
+        Reservation reservationCheckOut = reservationRepository.findById(reservationId).orElseThrow(ReservationNotFoundException::new);
 
-        checkOutResident.setResident(residentCheckOut);
-        checkOutRepository.save(checkOutResident);
+        Period period = Period.between(reservationCheckOut.getStayFrom(), reservationCheckOut.getStayTo());
+        int stayLength = period.getDays();
+
+        checkOutReservation.setStayLength(stayLength);
+        BigDecimal total = reservationCheckOut.getPricePerNight().multiply(BigDecimal.valueOf(stayLength));
+        checkOutReservation.setTotalPrice(total);
+        checkOutReservation.setEuroTotalPrice(fixerCurrencyRate.getTodayPlnCurrency().multiply(total));
+
+        checkOutReservation.setReservation(reservationCheckOut);
+        checkOutRepository.save(checkOutReservation);
     }
 }

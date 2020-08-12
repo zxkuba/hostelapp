@@ -4,12 +4,10 @@ import com.zxkuba.reservationapp.client.FixerCurrencyClient;
 import com.zxkuba.reservationapp.domain.CheckOutDto;
 import com.zxkuba.reservationapp.domain.currency.FixerCurrencyDto;
 import com.zxkuba.reservationapp.exception.CheckOutNotFoundException;
-import com.zxkuba.reservationapp.exception.ResidentNotFoundException;
+import com.zxkuba.reservationapp.exception.ReservationNotFoundException;
 import com.zxkuba.reservationapp.service.CheckOutDbService;
 import com.zxkuba.reservationapp.service.PlnCurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,9 +62,9 @@ public class CheckOutController {
     }
 
     @PutMapping(value = "/{checkOutId}", produces = APPLICATION_JSON_VALUE)
-    public void setResidentToCheckOut(@PathVariable Long checkOutId, @RequestBody Long residentId)
-        throws CheckOutNotFoundException, ResidentNotFoundException {
-         checkOutDbService.setResidentToCheckOut(checkOutId, residentId);
+    public void setReservationToCheckOut(@PathVariable Long checkOutId, @RequestBody Long reservationId)
+        throws CheckOutNotFoundException, ReservationNotFoundException {
+         checkOutDbService.setReservationToCheckOut(checkOutId, reservationId);
     }
 
 

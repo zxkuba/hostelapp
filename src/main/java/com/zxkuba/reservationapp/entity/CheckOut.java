@@ -27,13 +27,16 @@ public class CheckOut {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "RESIDENT_ID")
-    private Resident resident;
+    @JoinColumn(name = "RESERVATION_ID")
+    private Reservation reservation;
 
     @Column(name = "STAY_LENGTH")
     private Integer stayLength;
 
     @Column(name = "TOTAL_PRICE")
     private BigDecimal totalPrice;
+
+    @Transient
+    private BigDecimal euroTotalPrice;
 
 }
