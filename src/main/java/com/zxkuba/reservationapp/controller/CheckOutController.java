@@ -5,6 +5,8 @@ import com.zxkuba.reservationapp.domain.CheckOutDto;
 import com.zxkuba.reservationapp.domain.currency.FixerCurrencyDto;
 import com.zxkuba.reservationapp.exception.CheckOutNotFoundException;
 import com.zxkuba.reservationapp.exception.ReservationNotFoundException;
+import com.zxkuba.reservationapp.exception.ResidentNotFoundException;
+import com.zxkuba.reservationapp.exception.RoomNotFoundException;
 import com.zxkuba.reservationapp.service.CheckOutDbService;
 import com.zxkuba.reservationapp.service.PlnCurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping ("v1/checkout")
+@RequestMapping ("/v1/checkout")
 public class CheckOutController {
 
     private final CheckOutDbService checkOutDbService;
@@ -65,6 +67,12 @@ public class CheckOutController {
     public void setReservationToCheckOut(@PathVariable Long checkOutId, @RequestBody Long reservationId)
         throws CheckOutNotFoundException, ReservationNotFoundException {
          checkOutDbService.setReservationToCheckOut(checkOutId, reservationId);
+    }
+
+    @PutMapping(value = "/{roomId}", produces = APPLICATION_JSON_VALUE)
+    public void removeResidentFromRoom(@PathVariable Long roomId, @RequestBody Long residentId)
+    throws RoomNotFoundException, ResidentNotFoundException {
+        checkOutDbService.removeResidentFromRoom(roomId, residentId);
     }
 
 

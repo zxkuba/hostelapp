@@ -32,7 +32,7 @@ public class RoomController {
         return roomDbService.getRoomById(roomId);
     }
 
-    @DeleteMapping("/{roomId}")
+    @DeleteMapping(value = "/{roomId}")
     public void deleteRoom(@PathVariable Long roomId) throws RoomNotFoundException {
         RoomDto roomDto = roomDbService.getRoomById(roomId);
         if(roomDto != null){

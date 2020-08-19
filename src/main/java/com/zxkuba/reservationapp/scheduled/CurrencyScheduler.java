@@ -19,9 +19,11 @@ public class CurrencyScheduler {
         this.fixerCurrencyClient = fixerCurrencyClient;
     }
 
-    @Scheduled(cron = "0 0 10 * * *")
-    public FixerCurrencyDto fetchCurrencyToDb(){
-        FixerCurrencyDto fixerCurrencyDto = fixerCurrencyClient.getCurrentPlnCurrency();
-        return plnCurrencyService.save(fixerCurrencyDto);
+    @Scheduled(cron = "*/10 * * * * *")
+    public void fetchCurrencyToDb(){
+        plnCurrencyService.deleteAll();
+      FixerCurrencyDto fixerCurrencyDto = fixerCurrencyClient.getCurrentPlnCurrency();
+       plnCurrencyService.save(fixerCurrencyDto);
     }
+    
 }
