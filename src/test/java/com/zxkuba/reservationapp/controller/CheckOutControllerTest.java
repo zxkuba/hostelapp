@@ -78,7 +78,85 @@ class CheckOutControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)));
     }
 
+    @Test
+    public void shouldFetchCheckOut() throws Exception{
+        //Given
+        CheckOutDto checkOutDto = CheckOutDto.builder()
+                .id(1L)
+                .stayLength(20)
+                .totalPrice(new BigDecimal(4000))
+                .euroTotalPrice(new BigDecimal(1000))
+                .build();
+        when(checkOutDbService.getCheckOutById(checkOutDto.getId())).thenReturn(checkOutDto);
+        //When & Then
+        mockMvc.perform(get("/v1/checkout").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 
+    @Test
+    public void shouldCreateCheckOut() throws Exception{
+        //Given
+        CheckOutDto checkOutDto = CheckOutDto.builder()
+                .id(1L)
+                .stayLength(20)
+                .totalPrice(new BigDecimal(4000))
+                .euroTotalPrice(new BigDecimal(1000))
+                .build();
+        when(checkOutDbService.saveCheckOut(ArgumentMatchers.any(CheckOutDto.class))).thenReturn(checkOutDto);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(checkOutDto);
+        //When & Then
+        mockMvc.perform(post("/v1/checkout").contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void shouldUpdateCheckOut() throws Exception{
+        //Given
+        CheckOutDto checkOutDto = CheckOutDto.builder()
+                .id(1L)
+                .stayLength(20)
+                .totalPrice(new BigDecimal(4000))
+                .euroTotalPrice(new BigDecimal(1000))
+                .build();
+        CheckOutDto checkOutDto1 = CheckOutDto.builder()
+                .id(1L)
+                .stayLength(10)
+                .totalPrice(new BigDecimal(2000))
+                .euroTotalPrice(new BigDecimal(500))
+                .build();
+        when(checkOutDbService.saveCheckOut(ArgumentMatchers.any(CheckOutDto.class))).thenReturn(checkOutDto);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(checkOutDto1);
+        //When & Then
+        mockMvc.perform(put("/v1/checkout").contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void shouldDeleteCheckOut() throws Exception{
+        //Given
+        CheckOutDto checkOutDto = CheckOutDto.builder()
+                .id(1L)
+                .stayLength(20)
+                .totalPrice(new BigDecimal(4000))
+                .euroTotalPrice(new BigDecimal(1000))
+                .build();
+        when(checkOutDbService.getCheckOutById(checkOutDto.getId())).thenReturn(checkOutDto);
+        //When & Then
+        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/checkout/{CheckOutId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 
 
 }
